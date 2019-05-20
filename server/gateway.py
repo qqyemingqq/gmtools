@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 
-from flask import Flask
+from flask import Flask,make_response
 import json
 
 app = Flask(__name__)
@@ -32,6 +32,7 @@ def minigamedata():
     result = []
     for data in datas:
         result.append([ d for d in data])
-            
+    rst = make_response(json.dumps([collumn_name_list]+result))
+    rst.headers['Access-Control-Allow-Origin'] = '*'
     # cnx.close()
-    return json.dumps([collumn_name_list]+result)
+    return rst

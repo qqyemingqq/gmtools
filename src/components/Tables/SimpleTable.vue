@@ -108,7 +108,7 @@
                 </md-field>
             </div>
         </div>
-        <md-table :table-header-color="tableHeaderColor">
+        <md-table md-sort="id" md-numeric :table-header-color="tableHeaderColor">
             <md-table-row>
                 <md-table-head md-label="">产品</md-table-head>
                 <md-table-head md-label="">ID</md-table-head>
@@ -124,7 +124,7 @@
             </md-table-row>
             <md-table-row v-for="(item, index) in searched" :key="index">
                 <md-table-cell>{{ item.app_name }}</md-table-cell>
-                <md-table-cell>{{ item.app_id }}</md-table-cell>
+                <md-table-cell md-sort="index" md-numeric md-sort-order="asc">{{ item.app_id }}</md-table-cell>
                 <md-table-cell>{{ item.app_appid }}</md-table-cell>
                 <md-table-cell class="app-path">
                     {{ item.app_path }}
@@ -174,7 +174,10 @@
         },
         created() {
             this.cpaData = this.$cpaData.cpaData;
-            this.searched = this.cpaData;
+            this.$cpaData.getCPAData((res)=>{
+                this.searched=res;
+                console.log(res)
+            });
         },
         methods: {
             checkOneInfo: (e) => {
@@ -208,6 +211,7 @@
         data() {
             return {
                 required: true,
+                refreshCPAData:null,
                 addData: {
                     app_name: "",
                     app_id: "",
@@ -232,15 +236,6 @@
                 selected: [],
                 users: [
                     {
-                        app_name: "城市霸主",
-                        app_id: "10041",
-                        app_appid: "wx1c876c035ead4bc5",
-                        app_path: "channel=1013",
-                        app_price: "0.7",
-                        app_quantity: "",
-                        gm: "有后台",
-                        app_icon: "doudizhu.png",
-                        others: ""
                     }
                 ]
             };
