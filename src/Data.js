@@ -10,9 +10,6 @@ const requests = function (re, cb) {
 };
 
 
-let testData = [];
-
-
 const computeCPAData = function (testData) {
     let re = [];
     for (let i = 1; i < testData.length; i++) {

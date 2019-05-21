@@ -1,25 +1,27 @@
 <template>
     <div>
         <md-dialog  :md-active.sync="addBoxActive" :md-click-outside-to-close="false">
-            <div style="padding: 20px">
+            <div style="padding: 20px" @change="checkField">
                 <div class="md-layout">
                     <div class="md-layout-item">
-                        <md-field>
+                        <md-field :class="{'md-invalid':checkData.app_name}">
                             <label>产品名称</label>
-                            <md-input v-model="addData.app_name" required></md-input>
+                            <md-input v-model="addData.app_name" required ></md-input>
+                            <span class="md-error">此项必填</span>
                         </md-field>
                     </div>
                     <div class="md-layout-item">
-                        <md-field>
+                        <md-field :class="{'md-invalid':checkData.app_id}">
                             <label>ID</label>
                             <md-input v-model="addData.app_id" required></md-input>
+                            <span class="md-error">此项必填</span>
                         </md-field>
                     </div>
                     <div class="md-layout-item">
-                        <md-field >
+                        <md-field :class="{'md-invalid':checkData.app_appid}">
                             <label>APPID</label>
                             <md-input v-model="addData.app_appid" required></md-input>
-                            <span class="md-error">There is an error</span>
+                            <span class="md-error">此项必填</span>
                         </md-field>
                     </div>
                 </div>
@@ -29,9 +31,10 @@
                 </md-field>
                 <div class="md-layout">
                     <div class="md-layout-item">
-                        <md-field>
+                        <md-field :class="{'md-invalid':checkData.app_price}">
                             <label>CPA单价</label>
                             <md-input v-model="addData.app_price" required></md-input>
+                            <span class="md-error">此项必填</span>
                         </md-field>
                     </div>
                     <div class="md-layout-item">
@@ -41,9 +44,10 @@
                         </md-field>
                     </div>
                     <div class="md-layout-item">
-                    <md-field>
+                    <md-field :class="{'md-invalid':checkData.app_type}">
                         <label>类型</label>
                         <md-input v-model="addData.app_type" required></md-input>
+                        <span class="md-error">此项必填</span>
                     </md-field>
                     </div>
                 </div>
@@ -70,9 +74,10 @@
 
                 <div class="md-layout" >
                     <div class="md-layout-item">
-                        <md-field>
+                        <md-field :class="{'md-invalid':checkData.app_icon}">
                             <label>图标</label>
                             <md-input v-model="addData.app_icon" required></md-input>
+                            <span class="md-error">此项必填</span>
                         </md-field>
                     </div>
                     <div class="md-layout-item">
@@ -84,15 +89,16 @@
                 </div>
 
                 <md-field>
-                    <label>描述</label>
+                    <label :class="{'md-invalid':checkData.app_description}">描述</label>
                     <md-input v-model="addData.app_description" required></md-input>
+                    <span class="md-error">此项必填</span>
                 </md-field>
 
 
 
             </div>
             <md-dialog-actions>
-                <md-button class="md-primary" @click="clearAddData()">清空</md-button>
+                <md-button class="md-primary" @click="clearAddData">清空</md-button>
                 <md-button class="md-primary" @click="addBoxActive = false">关闭</md-button>
                 <md-button class="md-primary" @click="addAppInfo()">保存</md-button>
             </md-dialog-actions>
@@ -143,7 +149,9 @@
                     <md-tooltip class="tooltip" md-direction="top">{{ item.app_icon }}</md-tooltip>
                 </md-table-cell>
                 <md-table-cell>
-                    <md-button v-on:click="addData = JSON.parse(JSON.stringify(item));addBoxActive=true" class="md-primary md-raised">查看</md-button>
+                    <md-button v-on:click="addData = JSON.parse(JSON.stringify(item));addBoxActive=true"
+                               class="md-primary md-raised">查看
+                    </md-button>
                 </md-table-cell>
             </md-table-row>
         </md-table>
@@ -160,7 +168,6 @@
         if (term) {
             return items.filter(item => toLower(item.app_name).includes(toLower(term)))
         }
-
         return items
     };
     export default {
@@ -175,7 +182,7 @@
         created() {
             this.cpaData = this.$cpaData.cpaData;
             this.$cpaData.getCPAData((res)=>{
-                this.searched=res;
+                this.searched=res.reverse();
                 console.log(res)
             });
         },
@@ -194,15 +201,30 @@
                 console.log();
             },
             searchOnTable() {
-                this.searched = searchByName(this.cpaData, this.search)
+                this.searched = searchByName(this.cpaData, this.search).reverse();
             },
             addAppInfo:function(){
+                if(this.checkField()){
+
+                }
                 console.log(this.addData)
+            },
+            checkField:function(){
+                for (let key in this.checkData) {
+                    this.checkData[key] = this.addData[key] === "";
+                }
+                for (let key in this.checkData) {
+                    if(this.checkData[key] === false){
+                        return false;
+                    }
+                }
+                return true;
             },
             clearAddData:function () {
                 for (let key in this.addData) {
                     this.addData[key] = "";
                 }
+                this.checkField();
             }
         },
         computed: {
@@ -227,6 +249,16 @@
                     app_icon: "",
                     app_owner: "",
                     app_animation: ""
+                },
+                checkData: {
+                    app_name: false,
+                    app_id: false,
+                    app_appid: false,
+                    app_price: false,
+                    app_description: false,
+                    app_type: false,
+                    app_icon: false,
+                    app_owner: false,
                 },
                 addBoxActive: false,
                 cdnUrl: 'https://onimg.leshu.com/wxgame/Princess_coming/moreGameIcons/',
