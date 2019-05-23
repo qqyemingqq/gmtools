@@ -1,6 +1,6 @@
 <template>
     <div>
-        <md-dialog  :md-active.sync="addBoxActive" :md-click-outside-to-close="false">
+        <md-dialog style="height: 580px;width: 608px;" :md-active.sync="addBoxActive" :md-click-outside-to-close="false">
             <div style="padding: 20px" @change="checkField">
                 <div class="md-layout">
                     <div class="md-layout-item">
@@ -100,13 +100,13 @@
             <md-dialog-actions>
                 <md-button class="md-primary" @click="clearAddData">清空</md-button>
                 <md-button class="md-primary" @click="addBoxActive = false">关闭</md-button>
-                <md-button class="md-primary" @click="addAppInfo()">保存</md-button>
+                <md-button class="md-primary" @click="addAndModifyAppInfo()">{{isModify?"修改":"新增"}}</md-button>
             </md-dialog-actions>
         </md-dialog>
 
         <div class="md-layout">
             <div class="md-layout-item">
-                <md-button class="md-primary md-raised" @click="addBoxActive = true">添加</md-button>
+                <md-button class="md-primary md-raised" @click="addBoxActive = true;isModify=false;">添加</md-button>
             </div>
             <div class="md-layout-item md-alignment-right">
                 <md-field md-clearable class="md-toolbar-section-end">
@@ -114,7 +114,7 @@
                 </md-field>
             </div>
         </div>
-        <md-table md-sort="id" md-numeric :table-header-color="tableHeaderColor">
+        <md-table md-sort="id"  md-numeric :table-header-color="tableHeaderColor">
             <md-table-row>
                 <md-table-head md-label="">产品</md-table-head>
                 <md-table-head md-label="">ID</md-table-head>
@@ -149,7 +149,7 @@
                     <md-tooltip class="tooltip" md-direction="top">{{ item.app_icon }}</md-tooltip>
                 </md-table-cell>
                 <md-table-cell>
-                    <md-button v-on:click="addData = JSON.parse(JSON.stringify(item));addBoxActive=true"
+                    <md-button v-on:click="addData = JSON.parse(JSON.stringify(item));addBoxActive=true;checkField();isModify=true;"
                                class="md-primary md-raised">查看
                     </md-button>
                 </md-table-cell>
@@ -180,15 +180,16 @@
             }
         },
         created() {
+            this.addCpaData = this.$cpaData.addCpaData;
+            this.modifyCpaData = this.$cpaData.modifyCpaData;
             this.cpaData = this.$cpaData.cpaData;
+
             this.$cpaData.getCPAData((res)=>{
                 this.searched=res.reverse();
-                console.log(res)
             });
         },
         methods: {
             checkOneInfo: (e) => {
-                console.log(e);
                 let appid = e.path[2].getAttribute('myAppId');
                 for (let key in this.cpaData) {
                     if(this.cpaData[key]['app_id'].toString() === appid.toString()){
@@ -203,11 +204,13 @@
             searchOnTable() {
                 this.searched = searchByName(this.cpaData, this.search).reverse();
             },
-            addAppInfo:function(){
+            addAndModifyAppInfo:function(){
+
+                console.log(this.addData);
+                console.log(this.isModify?"修改":"新增");
                 if(this.checkField()){
 
                 }
-                console.log(this.addData)
             },
             checkField:function(){
                 for (let key in this.checkData) {
@@ -232,6 +235,9 @@
         },
         data() {
             return {
+                isModify:false,
+                addCpaData:null,
+                modifyCpaData:null,
                 required: true,
                 refreshCPAData:null,
                 addData: {

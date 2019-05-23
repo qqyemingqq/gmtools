@@ -10,27 +10,25 @@ const requests = function (re, cb) {
 };
 
 
-const computeCPAData = function (testData) {
-    let re = [];
-    for (let i = 1; i < testData.length; i++) {
-        const element = testData[i];
-        let tempObj = {};
-        for (let j = 0; j < element.length; j++) {
-            tempObj[testData[0][j]] = element[j] ? element[j].toString() : element[j];
-        }
-        re.push(tempObj);
-    }
-    console.log(re);
-    return re;
-};
-
 const getCPAData =function (cb) {
    requests('minigamedata',(res)=>{
-       cb(computeCPAData(res));
+       cb(res);
+    });
+};
+const addCpaData = function (data) {
+    requests('addminigamedata',(res)=>{
+        cb(res);
+    });
+};
+
+const modifyCpaData = function () {
+    requests('modifyminigamedata',(res)=>{
+        cb(res);
     });
 };
 
 export default {
     getCPAData,
-    requests
+    addCpaData,
+    modifyCpaData
 };
