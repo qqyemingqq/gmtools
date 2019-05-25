@@ -209,7 +209,11 @@
                 console.log(this.addData);
                 console.log(this.isModify?"修改":"新增");
                 if(this.checkField()){
+                    if(this.isModify){
 
+                    }else{
+                        this.addCpaData
+                    }
                 }
             },
             checkField:function(){

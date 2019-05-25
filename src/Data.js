@@ -1,12 +1,12 @@
 const requestUrl = 'http://10.10.170.160:9998/';
-const requests = function (re, cb) {
+const requests = function ( re, cb , data=null) {
     let request = new XMLHttpRequest();
-    request.open('GET', requestUrl + re, true);
+    request.open(data?'POST':'GET', requestUrl + re, true);
     request.responseType = 'json';
     request.onload = function () {
         cb(request.response);
     };
-    request.send();
+    request.send(data?data:null);
 };
 
 
@@ -18,7 +18,7 @@ const getCPAData =function (cb) {
 const addCpaData = function (data) {
     requests('addminigamedata',(res)=>{
         cb(res);
-    });
+    },data);
 };
 
 const modifyCpaData = function () {
