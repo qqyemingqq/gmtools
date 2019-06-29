@@ -4,6 +4,8 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import App from "./App";
 import cpaData from "./Data";
+import tools from "./tools";
+
 
 // router setup
 import routes from "./routes/routes";
@@ -26,6 +28,7 @@ const router = new VueRouter({
 
 Vue.prototype.$Chartist = Chartist;
 Vue.prototype.$cpaData = cpaData;
+Vue.prototype.$tools = tools;
 Vue.use(VueRouter);
 Vue.use(MaterialDashboard);
 Vue.use(GlobalComponents);
