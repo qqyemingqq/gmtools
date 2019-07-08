@@ -15,12 +15,6 @@
                             <md-input v-model="addData.app_id" required :disabled="isModify?true:false"></md-input>
                         </md-field>
                     </div>
-                    <div class="md-layout-item">
-                        <md-field >
-                            <label>APPID</label>
-                            <md-input v-model="addData.app_appid" required></md-input>
-                        </md-field>
-                    </div>
                 </div>
                 <md-field>
                     <label>路径</label>
@@ -122,7 +116,6 @@
             <md-table-row>
                 <md-table-head md-label="">产品</md-table-head>
                 <md-table-head md-label="">ID</md-table-head>
-                <md-table-head md-label="">APPID</md-table-head>
                 <md-table-head md-label="" class="app-path">路径</md-table-head>
                 <md-table-head md-label="">CPA单价</md-table-head>
                 <md-table-head md-label="">每日量级</md-table-head>
@@ -135,7 +128,6 @@
             <md-table-row v-for="(item, index) in searched" :key="index">
                 <md-table-cell>{{ item.app_name }}</md-table-cell>
                 <md-table-cell md-sort="index" md-numeric md-sort-order="asc">{{ item.app_id }}</md-table-cell>
-                <md-table-cell>{{ item.app_appid }}</md-table-cell>
                 <md-table-cell class="app-path">
                     {{ item.app_path }}
                     <md-tooltip class="tooltip" md-direction="top">{{ item.app_path }}</md-tooltip>
@@ -250,7 +242,7 @@
                 for (let key in this.checkData) {
                     if(this.checkData[key] === false){
                         this.dialogAlert = true;
-                        this.dialogAlertMessage = key + "  不能為空";
+                        this.dialogAlertMessage = this.checkDataString[key] + "  不能為空";
                         return false;
                     }
                 }
@@ -277,10 +269,9 @@
                 addData: {
                     app_name: "",
                     app_id: "",
-                    app_appid: "",
                     app_path: "",
                     app_price: "",
-                    app_quantity: "",
+                    app_quantity: 0,
                     gm_url: "",
                     gm_account: "",
                     gm_secret: "",
@@ -292,11 +283,18 @@
                 checkData: {
                     app_name: false,
                     app_id: false,
-                    app_appid: false,
                     app_price: false,
                     app_description: false,
                     app_type: false,
                     app_icon: false,
+                },
+                checkDataString:{
+                    app_name: '产品名字',
+                    app_id: 'ID',
+                    app_price: '单价',
+                    app_description: '描述',
+                    app_type: '类型',
+                    app_icon: '图标',
                 },
                 addBoxActive: false,
                 cdnUrl: 'https://onimg.leshu.com/wxgame/Princess_coming/moreGameIcons/',

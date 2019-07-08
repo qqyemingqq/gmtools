@@ -92,7 +92,7 @@
                 selectedStartDate:this.$tools.formatTime(new Date(new Date()-7*86400000)),
                 selectedEndtDate:this.$tools.formatTime(new Date()),
                 selectedAppId:'',
-                addBoxActive:false
+                addBoxActive:false,
             }
         }
     };

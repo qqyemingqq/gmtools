@@ -110,7 +110,18 @@ const gmIdList = [
     {app_id: '83', name: '垃圾分类'},
     {app_id: '82', name: '极速战神'}
 ];
-
+const modifyappbase = function (data) {
+    data.op = 'modify';
+    requests('modifyappbase', function (res) {
+        if (cb) cb(res);
+    }, data);
+};
+const addappbase = function (data,cb) {
+    data.op = 'add';
+    requests('modifyappbase', function (res) {
+        if (cb) cb(res);
+    }, data);
+};
 
 export default {
     getCPAData,
@@ -124,5 +135,7 @@ export default {
     CpaCpList,
     getGmData,
     gmIdList,
-    getappdata
+    getappdata,
+    addappbase,
+    modifyappbase
 };
