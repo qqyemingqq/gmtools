@@ -12,6 +12,10 @@
                 <!--<md-icon>person</md-icon>-->
                 <!--<p>User Profile</p>-->
             <!--</sidebar-link>-->
+            <sidebar-link to="/basedata">
+                <md-icon>content_paste</md-icon>
+                <p>基础数据</p>
+            </sidebar-link>
 
             <sidebar-link to="/allcpa">
                 <md-icon>content_paste</md-icon>
@@ -21,9 +25,13 @@
                 <md-icon>content_paste</md-icon>
                 <p>CPA信息</p>
             </sidebar-link>
-            <sidebar-link to="/stat">
+            <!--<sidebar-link to="/stat">-->
+                <!--<md-icon>content_paste</md-icon>-->
+                <!--<p>CPA记录</p>-->
+            <!--</sidebar-link>-->
+            <sidebar-link to="/channeldata">
                 <md-icon>content_paste</md-icon>
-                <p>CPA记录</p>
+                <p>渠道数据</p>
             </sidebar-link>
 
             <sidebar-link to="/cdata">

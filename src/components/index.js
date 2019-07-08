@@ -10,6 +10,9 @@ import SimpleTable from "./Tables/SimpleTable.vue";
 import CpaStatTable from "./Tables/CpaStatTable.vue";
 import CpaPriceInputTable from "./Tables/CpaPriceInputTable.vue";
 import AllCpaBaseList from "./Tables/AllCpaBaseList.vue";
+// import GmaePicker from "./Tables/GmaePicker.vue";
+import  ChannelDataTable from "./Tables/ChannelDataTable.vue";
+import  BaseDataTable from "./Tables/BaseDataTable.vue";
 
 export {
   ChartCard,
@@ -20,5 +23,8 @@ export {
   SimpleTable,
     CpaStatTable,
     CpaPriceInputTable,
-    AllCpaBaseList
+    AllCpaBaseList,
+    // GmaePickerm
+    ChannelDataTable,
+    BaseDataTable
 };

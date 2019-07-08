@@ -1,7 +1,7 @@
 const requestUrl = 'http://10.10.170.160:9998/';
 const requests = function (re, cb, data = null) {
     let request = new XMLHttpRequest();
-    request.open(data ? 'POST' : 'GET', requestUrl + re, true);
+    request.open(data ? 'POST' : 'GET', re.indexOf("http") !== -1 ? re : (requestUrl + re), true);
     request.responseType = 'json';
     request.onload = function () {
         cb(request.response);
@@ -63,12 +63,54 @@ const allappbase = function (cb) {
     });
 };
 
-const CpaCpList = {
-    '26':[26,35],
-    '54':[54,33],
-    '23':[23],
-    '83':[83],
+const getappdata = function (data,cb) {
+    data.ed = data.ed || '';
+    data.sd = data.sd || '';
+    data.ai = data.ai || 54;
+    requests('getappdata', function (res) {
+        if (cb) cb(res);
+    },data);
 };
+
+const CpaCpList = {
+    '26': [26, 35],
+    '54': [54, 33],
+    '23': [23],
+    '83': [83],
+    '80': [80],
+    '82': [82],
+};
+
+// 接口  https://gm-sddh.leshu.com/api.php?fs=3001  post请求
+//
+// 参数
+// start_time  开始时间 格式 2018-12-07
+// stop_time  结束时间 格式 2018-12-07
+// channel_id   渠道id
+// gid   产品id  （比如赛道大亨为26）
+
+const getGmData = function (data, cb) {
+    data = data || {};
+    // data.start_time = '';
+    // data.stop_time = '';
+    // data.channel_id = '';
+    // data.gid = 26;
+    requests('getGmData', function (res) {
+        if (cb) cb(res);
+    }, data);
+};
+
+const gameIdToGMId = function (gameId) {
+
+};
+const gmIdList = [
+    {app_id: '54', name: '心动练习生'},
+    {app_id: '26', name: '赛道大亨'},
+    {app_id: '23', name: '王者泡泡龙'},
+    {app_id: '83', name: '垃圾分类'},
+    {app_id: '82', name: '极速战神'}
+];
+
 
 export default {
     getCPAData,
@@ -79,5 +121,8 @@ export default {
     getSavedCpaRecord,
     fetchcparecord,
     allappbase,
-    CpaCpList
+    CpaCpList,
+    getGmData,
+    gmIdList,
+    getappdata
 };

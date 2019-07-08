@@ -11,6 +11,8 @@ import Notifications from "@/pages/Notifications.vue";
 import UpgradeToPRO from "@/pages/UpgradeToPRO.vue";
 import CpaPriceInput from "@/pages/CpaPriceInput.vue";
 import AllCpaBase from "@/pages/AllCpaBase.vue";
+import ChannelData from "../pages/ChannelData";
+import BaseData from "../pages/Layout/BaseData";
 
 const routes = [
     {
@@ -34,9 +36,19 @@ const routes = [
                 component: AllCpaBase
             },
             {
+                path: "channeldata",
+                name: "渠道数据",
+                component: ChannelData
+            },
+            {
                 path: "table",
                 name: "CPA信息",
                 component: CPAList
+            },
+            {
+                path: "basedata",
+                name: "基础数据",
+                component: BaseData
             },
             {
                 path: "stat",
